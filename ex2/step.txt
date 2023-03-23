@@ -5,7 +5,7 @@ EXECUTION
 	Step1: Use reducer.py in lap3(Highest) to get lowest temperature
 	Step2: Copy files to HDFS
 		hdfs dfs -mkdir -p data/bigtest/ex2
-		hdfs dfs -copyFromLocal /home/hdoop/Downloads/ncdc /user/hdoop/data/bigtest/ex2
+		hdfs dfs -copyFromLocal /home/hdoop/Datasets/NCDC /user/hdoop/data/bigtest/ex2
 	Step3: Run MapReduce by Hadoop Streaming
 		cd /home/hdoop/labs/bigtest/ex2
 		hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
@@ -14,6 +14,6 @@ EXECUTION
  -input /user/hdoop/data/bigtest/ex2/NCDC \
  -output /user/hdoop/data/bigtest/ex2/NCDC-sum-output 
 	Step4: Save output to local
-		hdfs dfs -copyToLocal /user/hdoop/data/bigtest/ex2/ncdc-lowest-output/part-00000 .
+		hdfs dfs -copyToLocal /user/hdoop/data/bigtest/ex2/ncdc-sum-output/part-00000 .
 
 yarn application -list -kill {id}
