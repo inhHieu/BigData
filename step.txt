@@ -1,0 +1,21 @@
+Ex2:
+
+
+EXECUTION
+	Step1: Use reducer.py in lap3(Highest) to get lowest temperature
+	Step2: Copy files to HDFS
+		hdfs dfs -mkdir -p data/bigtest/ex2
+		hdfs dfs -copyFromLocal /home/hdoop/Downloads/NCDC /user/hdoop/data/bigtest/ex2
+	Step3: Run MapReduce by Hadoop Streaming
+		cd /home/hdoop/labs/bigtest/ex2
+		hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
+ -file mapper.py -mapper mapper.py \
+ -file reducer.py -reducer reducer.py \
+ -input /user/hdoop/data/bigtest/ex2/NCDC \
+ -output /user/hdoop/data/bigtest/ex2/NCDC-sum-output 
+	Step4: Save output to local
+		hdfs dfs -copyToLocal /user/hdoop/data/bigtest/ex2/NCDC-sum-output/part-00000 .
+	Step5: Draw graph
+		cd /labs/bigtest/ex2/NCDC-sum-output
+		python3 graph.py
+yarn application -list -kill {id}
