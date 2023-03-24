@@ -3,11 +3,15 @@
 
 from operator import itemgetter
 import sys
+import numpy as np
 
 current_word = None
 current_count = 0
 word = None
 sum = 0
+
+arrWords = np.full(50,'thisisalongestwordevericanimagine')
+arrCount = np.full(50,0)
 
 # lấy dữ liệu từ thiết bị nhập chuẩn
 for line in sys.stdin:
@@ -29,11 +33,16 @@ for line in sys.stdin:
     # cho đến khi gặp từ mới.
     if word == current_word: # nếu từ mới trùng với từ đang xét thì tăng giá trị đếm của từ đang xét
         current_count += count
-        if count == 1:
-            sum += 1
     else:
+        for x in range(len(arrCount)): #lay k tu lap lai nhieu nhat
+            if current_count > arrCount[x]:
+                arrCount[x] = current_count
+                arrWords[x] = current_word
+                break
         if current_word: # nếu gặp từ mới thì in ra số lần xuất hiện của từ đang xét
             print('%s\t%s' % (current_word, current_count))
+        if current_count == 1: # dem so lan xuat hien
+            sum += 1
         # sau đó chuyển sang xử lý từ mới
         current_count = count
         current_word = word
@@ -41,4 +50,10 @@ for line in sys.stdin:
 # in ra từ cuối cùng
 if current_word == word:
     print('%s\t%s' % (current_word, current_count))
-print("Tong so tu"+sum)
+# in ra tong so tu
+#print(sum,'words counted in total')
+print('%s\t%s' % ('total', sum))
+# in ra top k tu
+for i in range(len(arrCount)):
+    #print(arrWords[i],'\t',arrCount[i])
+    print('%s\t%s' % (arrWords[i], arrCount[i]))
