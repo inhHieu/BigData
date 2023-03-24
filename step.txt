@@ -1,0 +1,21 @@
+Ex2:
+
+
+EXECUTION
+	Step1: Use reducer.py in lap3(Highest) to get lowest temperature
+	Step2: Copy files to HDFS
+		hdfs dfs -mkdir -p data/bigtest/ex1
+		hdfs dfs -copyFromLocal /home/hdoop/Downloads/datasets/Gutenberg /user/hdoop/data/bigtest/ex1
+	Step3: Run MapReduce by Hadoop Streaming
+		cd /home/hdoop/labs/bigtest/ex1
+		hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
+ -file mapper.py -mapper mapper.py \
+ -file reducer.py -reducer reducer.py \
+ -input /user/hdoop/data/bigtest/ex1/Gutenberg \
+ -output /user/hdoop/data/bigtest/ex1/Gutenberg-output 
+	Step4: Save output to local
+		hdfs dfs -copyToLocal /user/hdoop/data/bigtest/ex1/Gutenberg-output/part-0000
+	Step5: Draw graph
+		cd /labs/bigtest/ex1/Gutenberg-output 
+		python3 graph.py
+yarn application -list -kill {id}
